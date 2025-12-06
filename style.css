@@ -1,0 +1,357 @@
+:root {
+  --bg: #ecf5ff;
+  --card-bg: #ffffff;
+  --border-soft: #dde7f5;
+  --accent: #02c6c6;
+  --accent-soft: #e0faf9;
+  --text-main: #1b2a3b;
+  --text-muted: #6c7a92;
+  --danger: #ff6b6b;
+  --warning: #ffb84d;
+  --success: #2ecc71;
+  --shadow-soft: 0 20px 40px rgba(15, 35, 52, 0.06);
+}
+
+/* Reset / base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Page layout */
+.page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 32px 24px 40px;
+}
+
+/* Header */
+.header {
+  margin-bottom: 28px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-wave {
+  font-size: 26px;
+  color: var(--accent);
+  transform: translateY(3px);
+}
+
+.header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.header-subtitle {
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Layout rows */
+.row {
+  display: grid;
+  gap: 16px;
+}
+
+.vitals-row {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.risk-row {
+  grid-template-columns: 1.1fr 1.9fr;
+  margin-top: 18px;
+}
+
+.charts-row {
+  margin-top: 22px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Card base */
+.card {
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 18px 20px;
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-soft);
+}
+
+.card-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+/* Metric cards */
+.metric-card {
+  position: relative;
+}
+
+.metric-value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.metric-value span:first-child {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.metric-unit {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* Risk card */
+.risk-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #fffaf0;
+  border-color: #ffe1a3;
+}
+
+.risk-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.risk-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffe1a3;
+  color: #ff9f43;
+  font-size: 18px;
+}
+
+.risk-text {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Recommendation */
+.rec-text {
+  font-size: 14px;
+  color: var(--text-main);
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+/* Alert history card */
+.alert-history-card {
+  margin-top: 22px;
+  padding: 14px 18px;
+}
+
+/* Header inside the alert card stays visible while list scrolls */
+.alert-history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.alert-history-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bell {
+  font-size: 18px;
+}
+
+.alert-count {
+  color: var(--text-muted);
+}
+
+/* small control group to the right */
+.alert-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Clear history button */
+.btn-clear {
+  border: 1px solid rgba(27,42,59,0.08);
+  background: white;
+  color: var(--text-main);
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.12s, transform 0.05s;
+}
+.btn-clear:hover { background: rgba(27,42,59,0.03); }
+.btn-clear:active { transform: translateY(1px); }
+.btn-clear:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ========== KEY: make alert list scrollable ========== */
+.alert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  /* control the height of the list so page won't grow indefinitely */
+  max-height: 380px;      /* adjust this value to taste */
+  overflow-y: auto;      /* vertical scrolling enabled */
+  padding-right: 8px;    /* space so content isn't covered by the scrollbar */
+}
+
+/* Optional: visually nicer scrollbar on WebKit browsers */
+.alert-list::-webkit-scrollbar {
+  width: 10px;
+}
+.alert-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.alert-list::-webkit-scrollbar-thumb {
+  background-color: rgba(27, 42, 59, 0.12);
+  border-radius: 8px;
+}
+
+/* individual alert item */
+.alert-item {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #fff8f2;
+  border: 1px solid #ffe0c7;
+  font-size: 13px;
+}
+
+.alert-header-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.alert-level-pill {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+}
+
+.alert-time {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.alert-body {
+  color: var(--text-main);
+  margin-top: 2px;
+  font-size: 13px;
+}
+
+.alert-vitals {
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Level colors */
+.alert-warning .alert-level-pill {
+  background: #fff3cd;
+  color: #d39e00;
+}
+
+.alert-critical .alert-level-pill {
+  background: #fde2e2;
+  color: #e3342f;
+}
+
+.alert-normal .alert-level-pill {
+  background: #e4f9f2;
+  color: #1e8552;
+}
+
+/* Chart card sizing */
+.chart-card canvas {
+  width: 100% !important;
+  height: 220px !important;
+}
+
+/* Alert flashing for metric cards */
+.alert {
+  border-color: var(--danger) !important;
+  box-shadow: 0 0 0 1px rgba(255, 107, 107, 0.4),
+              0 18px 35px rgba(255, 107, 107, 0.25);
+  animation: blink 0.7s infinite alternate;
+}
+
+@keyframes blink {
+  from { opacity: 1; }
+  to   { opacity: 0.6; }
+}
+
+/* Risk label colors */
+.risk-normal {
+  color: var(--success);
+}
+
+.risk-warning {
+  color: #ff9f43;
+}
+
+.risk-critical {
+  color: var(--danger);
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .vitals-row,
+  .charts-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .vitals-row,
+  .charts-row,
+  .risk-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* reduce alert list height on small screens */
+  .alert-list {
+    max-height: 260px;
+  }
+}

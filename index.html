@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Health Monitoring Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="page">
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-title">
+          <span class="logo-wave">⌁</span>
+          <h1>Health Monitoring Dashboard</h1>
+        </div>
+        <p class="header-subtitle">Real-time patient vital signs monitoring</p>
+      </header>
+
+      <!-- Top vitals row -->
+      <section class="row vitals-row">
+        <div class="card metric-card" id="hrCard">
+          <div class="card-label">Heart Rate</div>
+          <div class="metric-value">
+            <span id="hr">--</span>
+            <span class="metric-unit">bpm</span>
+          </div>
+        </div>
+
+        <div class="card metric-card" id="spo2Card">
+          <div class="card-label">SpO₂</div>
+          <div class="metric-value">
+            <span id="spo2">--</span>
+            <span class="metric-unit">%</span>
+          </div>
+        </div>
+
+        <div class="card metric-card" id="tempCard">
+          <div class="card-label">Temperature</div>
+          <div class="metric-value">
+            <span id="temp">--</span>
+            <span class="metric-unit">°C</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Risk + Recommendation -->
+      <section class="row risk-row">
+        <div class="card risk-card" id="riskCard">
+          <div class="card-label">AI Risk Level</div>
+          <div class="risk-content">
+            <div class="risk-icon">⌁</div>
+            <div id="riskText" class="risk-text">--</div>
+          </div>
+        </div>
+
+        <div class="card rec-card" id="recommendCard">
+          <div class="card-label">Recommendation</div>
+          <p id="recommendText" class="rec-text">--</p>
+        </div>
+      </section>
+
+      <!-- Alert History -->
+      <section class="card alert-history-card" aria-labelledby="alert-history-heading">
+        <div class="alert-history-header">
+          <div class="alert-history-title">
+            <span class="bell">🔔</span>
+            <span id="alert-history-heading">Alert History</span>
+          </div>
+
+          <div class="alert-controls">
+            <span id="alertCount" class="alert-count">0 events</span>
+            <button id="clearHistoryBtn" class="btn-clear" title="Delete all alert history">Clear History</button>
+          </div>
+        </div>
+
+        <!-- Scrollable alerts list -->
+        <div id="alertList" class="alert-list" aria-live="polite" aria-relevant="additions">
+          <!-- alerts will be injected here -->
+        </div>
+      </section>
+
+      <!-- Charts row -->
+      <section class="row charts-row">
+        <div class="card chart-card">
+          <div class="card-label">Heart Rate</div>
+          <canvas id="hrChart"></canvas>
+        </div>
+        <div class="card chart-card">
+          <div class="card-label">SpO₂</div>
+          <canvas id="spo2Chart"></canvas>
+        </div>
+        <div class="card chart-card">
+          <div class="card-label">Temperature</div>
+          <canvas id="tempChart"></canvas>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Alert sound -->
+  <audio id="alertSound" preload="auto">
+    <source src="https://www.soundjay.com/buttons/beep-07a.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Firebase init (exposes window.appDb) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    // --- YOUR FIREBASE CONFIG ---
+    const firebaseConfig = {
+      apiKey: "AIzaSyAACnJylbrHMShJEoJb4tHG0bkKxgrQ0ZA",
+      authDomain: "iot-smart-health-system.firebaseapp.com",
+      databaseURL: "https://iot-smart-health-system-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "iot-smart-health-system",
+      storageBucket: "iot-smart-health-system.firebasestorage.app",
+      messagingSenderId: "715506197924",
+      appId: "1:715506197924:web:0a33617a439562d76f4d31"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    window.appDb = db; // expose for script.js
+  </script>
+
+  <!-- App logic -->
+  <script type="module" src="script.js"></script>
+</body>
+</html>
